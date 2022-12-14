@@ -1,0 +1,174 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+	<meta content="initial-scale=1, width=device-width, user-scalable=no" name="viewport">
+	
+	<script>
+var cwidth;
+var cheight;
+var colsLength
+var o;
+var arr;
+
+const config = {
+	fontSize: 40,
+	fontColor: '#6A1BDA',
+	speed: 40,
+};
+
+function matrixInit(canvas){
+	cwidth = canvas.width;
+	cheight = canvas.height;
+	colsLength = Math.ceil(cwidth / config.fontSize);
+	o = Math.ceil(cwidth / config.fontSize);
+	
+	arr = Array(colsLength).fill(0);const fontSizes = Array.from({
+		length: o
+		}).map((function() {
+			return n = 35,
+			(e = 10) + Math.floor(Math.random() * (n - e));
+			var e, n
+		}
+	));
+}
+
+function matrixCanvas(canvas) {
+	if (!canvas) throw Error('Invalid canvas element');
+
+	const ctx = canvas.getContext('2d');
+	const content = '01';
+	const matrix = content.split('');
+	const colsLength = Math.ceil(cwidth / config.fontSize);
+	const o = Math.ceil(cwidth / config.fontSize);
+  
+	let animation = null;
+	let timer = null;
+
+	function frame() {
+		animation = requestAnimationFrame(draw);
+	}
+
+	function draw(timestamp) {
+		if (timer && timestamp - timer < 75) return frame();
+		timer = timestamp;
+
+		ctx.fillStyle = 'rgba(0, 0, 0, .05)';
+		ctx.fillRect(0, 0, cwidth, cheight);
+		ctx.fillStyle = config.fontColor;
+
+		for (let i = 0; i < arr.length; i++) {
+			ctx.font = `30px Clash Display`;
+			let txt = matrix[Math.floor(Math.random() * matrix.length)];
+			ctx.fillText(txt, i * config.fontSize, arr[i] * config.fontSize);
+			if (arr[i] * config.fontSize > cheight && Math.random() > 0.975) arr[i] = 0;
+			arr[i]++;
+		}
+		frame();
+	}
+
+	frame();
+
+	return {
+		destroy() {
+			if(animation) {
+				cancelAnimationFrame(animation);
+				animation = null;
+			}
+		}
+	}
+}
+
+function loadedHandler(){
+	intro.style.display = "none";
+};
+
+document.addEventListener("DOMContentLoaded", function(){
+	intro = document.querySelector(".intro");
+	canvas = document.querySelector(".intro__canvas");
+	canvas.setAttribute("width", window.innerWidth);
+	canvas.setAttribute("height", window.innerHeight);
+	matrixInit(canvas);
+	matrixCanvas(canvas);
+	
+	window.addEventListener("resize", function(){
+		canvas.setAttribute("width", window.innerWidth);
+		canvas.setAttribute("height", window.innerHeight);
+		matrixInit(canvas);
+	});
+		
+	/*setTimeout(function(){
+		loadedHandler();
+	}, 2000);*/
+});
+	</script>
+	
+	<style>
+@font-face {
+    font-family: 'Clash Display';
+    src: url('data:font/woff;charset=utf-8;base64,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') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+HTML, BODY	{ height:100%; font-family:Clash Display; }
+
+.intro {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10000;
+  overflow: hidden;
+  background: #000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.intro__canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+	</style>
+<style type="text/css">
+@font-face {
+  font-weight: 400;
+  font-style:  normal;
+  font-family: 'Circular-Loom';
+
+  src: url('chrome-extension://liecbddmkiiihnedobmlmillhodjkdmb/fonts/CircularXXWeb-Book.woff2') format('woff2');
+}
+
+@font-face {
+  font-weight: 500;
+  font-style:  normal;
+  font-family: 'Circular-Loom';
+
+  src: url('chrome-extension://liecbddmkiiihnedobmlmillhodjkdmb/fonts/CircularXXWeb-Medium.woff2') format('woff2');
+}
+
+@font-face {
+  font-weight: 700;
+  font-style:  normal;
+  font-family: 'Circular-Loom';
+
+  src: url('chrome-extension://liecbddmkiiihnedobmlmillhodjkdmb/fonts/CircularXXWeb-Bold.woff2') format('woff2');
+}
+
+@font-face {
+  font-weight: 900;
+  font-style:  normal;
+  font-family: 'Circular-Loom';
+
+  src: url('chrome-extension://liecbddmkiiihnedobmlmillhodjkdmb/fonts/CircularXXWeb-Black.woff2') format('woff2');
+}</style></head>
+<body>
+	<div class="intro">
+		<canvas class="intro__canvas" width="1242" height="1264"></canvas>
+	</div>
+
+</body><loom-container id="lo-engage-ext-container"><loom-shadow classname="resolved"></loom-shadow></loom-container><loom-container id="lo-companion-container"><loom-shadow classname="resolved"></loom-shadow></loom-container></html>
