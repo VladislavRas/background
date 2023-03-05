@@ -1,4 +1,8 @@
-# background
-I combined the preloader code into 1 html file "fullIntro", you can use and edit it.
+# Анимированный фон | Матрица
+Анимированный фон можно использовать для прелоадера или просто фона вебсайта.
+### Для удобства все файлы объеденены в 1 html документ "fullIntro". Просто используйте этот код на своем сайте.
+Также можно использовать в конструкторах сайтов.
+Вы можете изменить скорость анимации, шрифт и цвет
 
-Just download file "fullIntro" and open it :)
+![](images/matrix.png)
+
